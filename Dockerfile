@@ -1,28 +1,32 @@
-# 使用多阶段构建
-# 第一阶段：构建nginx镜像
-FROM nginx:latest as nginx
+# 安装nginx
+FROM nginx:latest
 
-# 复制nginx配置文件到容器中
-COPY src/default.conf /etc/nginx/conf.d/default.conf
+# 更新源
+RUN apt-get update
 
-# 第二阶段：构建shadowsocks_python服务端
-FROM python:3.9-slim
+# 安装certbot
+RUN apt-get install -y certbot
+
+# 安装python运行环境
+RUN apt-get install -y python3 python3-pip
 
 # 安装shadowsocks
 RUN pip install shadowsocks
 
-# 复制nginx配置文件
-COPY --from=nginx /etc/nginx /etc/nginx
+# 复制nginx配置文件到容器中
+COPY src/default.conf /etc/nginx/conf.d/default.conf
 
 # 复制shadowsocks配置文件
-COPY config.json /etc/shadowsocks/config.json
+COPY src/config.json /etc/shadowsocks/config.json
 
 # 复制启动脚本
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
+COPY src/start.sh /start.sh
+COPY src/nginx.sh /nginx.sh
+COPY src/ssserver.sh /ssserver.sh
+RUN chmod +x /start.sh /nginx.sh /ssserver.sh
 
 # 暴露端口
-EXPOSE 80 443 8388
+EXPOSE 80 443 8095
 
 # 启动脚本
 CMD ["/start.sh"]

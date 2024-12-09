@@ -6,10 +6,4 @@
 
 - **Nginx**: 用于反向代理和负载均衡。
 - **Shadowsocks**: 提供加密的代理服务，保护您的隐私和数据安全。
-
-## 使用方法
-
-### 拉取镜像
-
-```sh
-docker pull your-docker-repo/nginx-shadowsocks:latest
+- **Docker**: 通过 Docker 容器技术，提供高效的部署和运行环境。
