@@ -1,11 +1,11 @@
-# 声明基础镜像 debian:bullseye-slim
-FROM debian:bullseye-slim
+# 声明基础镜像 debian
+FROM debian:latest
 
-# 更新apt-get源
-RUN apt-get update
-
-# 安装shadowsocks
-RUN apt-get install -y shadowsocks-libev
+# 安装 systemd 、shadowsocks-libev、清理缓存
+RUN apt-get update && \
+    apt-get install -y shadowsocks-libev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # 复制启动脚本
 COPY ./src/shell/start.sh /start.sh
