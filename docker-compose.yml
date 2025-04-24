@@ -1,0 +1,10 @@
+# docker-compose.yml
+services:
+  proxy:
+    image: hickiy/proxy:nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+    container_name: nginx
