@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ ! -f "/etc/letsencrypt/live/caijinbo.top/fullchain.pem" ]; then
   echo "通过certbot + http-01方式申请证书"
-  certbot certonly --standalone --non-interactive --email 596310898@163.com -d caijinbo.top
+  certbot certonly --standalone --non-interactive --agree-tos --email 596310898@163.com -d caijinbo.top
   if [ $? -eq 0 ]; then
     echo "证书申请成功"
   else
